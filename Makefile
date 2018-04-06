@@ -110,7 +110,7 @@ TEST_FOLDER=$(DATASET_FOLDER)/test
 METADATA_FOLDER=$(IMAGE_METADATA_PATH)
 
 #FILES
-PROCESS_DATABASE_FILE=utils/dataset/download.sh
+PROCESS_DATABASE_FILE=utils/dataset_utils/download.sh
 
 #############################################################################
 ############################ CODE COMMANDS ###################################
