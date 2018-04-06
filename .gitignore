@@ -100,6 +100,7 @@ ENV/
 # mypy
 .mypy_cache/
 
-
-./dataset/*
-./metadata/*
+metadata
+dataset
+dataset/*
+metadata/*
