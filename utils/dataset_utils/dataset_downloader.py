@@ -50,7 +50,7 @@ def ParseData(data_file):
     id_ = item['imageId']
     if id_ in annotations:
         labels_ = list_to_str(annotations[id_])
-        id_ = "id_{}_labels_{}".format(id_, annotations[id_])
+        id_ = "id_{}_labels_{}".format(id_, labels_)
     key_url_list.append((id_, url))
 
   return key_url_list
@@ -62,8 +62,6 @@ def DownloadImage(key_url):
 
   out_dir = sys.argv[2]
   (key, url) = key_url
-  print(key)
-  print(type(key))
   filename = os.path.join(out_dir, '%s.jpg' % key)
 
 

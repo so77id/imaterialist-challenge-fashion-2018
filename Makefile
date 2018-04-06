@@ -44,8 +44,8 @@ HOST_NOTEBOOK_PORT=28888
 #HOST CPU VARS
 HOST_CPU_SOURCE_PATH=$(shell pwd)
 # TODO make this working for all researcher in this project
-HOST_CPU_DATASETS_PATH=/Users/so77id/Desktop/workspace/kaggle/imaterialist-challenge-fashion-2018/dataset
-HOST_CPU_METADATA_PATH=/Users/so77id/Desktop/workspace/kaggle/imaterialist-challenge-fashion-2018/metadata
+HOST_CPU_DATASETS_PATH=/Users/so77id/Desktop/workspace/kaggle/datasets
+HOST_CPU_METADATA_PATH=/Users/so77id/Desktop/workspace/kaggle/metadata
 
 #HOST GPU PATHS
 HOST_GPU_SOURCE_PATH=$(shell pwd)
@@ -99,12 +99,16 @@ MKDIR_COMMAND=mkdir
 BASH_COMMAND=bash
 TENSORBOARD_COMMAND=tensorboard
 JUPYTER_COMMAND=jupyter
+WGET_COMMNAND=wget
+UNZIP_COMMAND=unzip
+RM_COMMAND=rm
 
 # Dataset VARS
 DATASET_FOLDER=$(IMAGE_DATASETS_PATH)/kaggle/imaterialist-challenge-fashion-2018
 TRAIN_FOLDER=$(DATASET_FOLDER)/train
 VALIDATION_FOLDER=$(DATASET_FOLDER)/validation
 TEST_FOLDER=$(DATASET_FOLDER)/test
+DATA_JSON_URL=http://www.recod.ic.unicamp.br/~mrodriguez/kaggle/imaterialist-challenge-fashion-2018/data.zip
 
 # Metadata VARS
 METADATA_FOLDER=$(IMAGE_METADATA_PATH)
@@ -117,10 +121,10 @@ PROCESS_DATABASE_FILE=utils/dataset_utils/download.sh
 ##############################################################################
 all: help
 
-setup s: setup-foder process-dataset
+setup s: setup-folder process-dataset
 	@echo "[Setup] Finish.."
 
-setup-foder sf:
+setup-folder sf:
 	@echo "[Setup] Setup folders.."
 	@$(MKDIR_COMMAND) -p $(TRAIN_FOLDER)
 	@$(MKDIR_COMMAND) -p $(VALIDATION_FOLDER)
@@ -129,7 +133,17 @@ setup-foder sf:
 
 process-dataset pd:
 	@echo "[Dataset Processing] Downloading.."
+	@$(WGET_COMMNAND) $(DATA_JSON_URL) -P $(DATASET_FOLDER)
+	@$(UNZIP_COMMAND) $(DATASET_FOLDER)/data.zip -d $(DATASET_FOLDER)
+
 	@$(BASH_COMMAND) $(PROCESS_DATABASE_FILE)
+
+	@echo "[Dataset Processing] Deleting files.."
+	@$(RM_COMMAND) $(DATASET_FOLDER)/data.zip
+	@$(RM_COMMAND) $(DATASET_FOLDER)/train.json
+	@$(RM_COMMAND) $(DATASET_FOLDER)/validation.json
+	@$(RM_COMMAND) $(DATASET_FOLDER)/test.json
+
 
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
