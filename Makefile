@@ -56,7 +56,7 @@ HOST_GPU_METADATA_PATH=/home/$(USER)/kaggle/imaterialist-challenge-fashion-2018/
 IMAGE_TENSORBOARD_PORT=6006
 IMAGE_NOTEBOOK_PORT=8888
 IMAGE_SOURCE_PATH=/home/src
-IMAGE_DATASETS_PATH=/home/datasets
+IMAGE_DATASETS_PATH=/home/datasets/kaggle/imaterialist-challenge-fashion-2018
 IMAGE_METADATA_PATH=/home/metadata
 
 
@@ -101,7 +101,7 @@ TENSORBOARD_COMMAND=tensorboard
 JUPYTER_COMMAND=jupyter
 
 # Dataset VARS
-DATASET_FOLDER=$(IMAGE_DATASETS_PATH)/kaggle/imaterialist-challenge-fashion-2018
+DATASET_FOLDER=$(IMAGE_DATASETS_PATH)
 TRAIN_FOLDER=$(DATASET_FOLDER)/train
 VALIDATION_FOLDER=$(DATASET_FOLDER)/validation
 TEST_FOLDER=$(DATASET_FOLDER)/test
