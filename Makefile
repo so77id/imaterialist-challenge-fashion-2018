@@ -119,6 +119,7 @@ PROCESS_DATABASE_FILE=utils/dataset_utils/download.sh
 CONFIG_FILE=./configs/config.json
 
 CREATE_LIST_FILE=utils.dataset_utils.create_list
+MAIN_DATASET_FILE=mains.dataset_main
 #############################################################################
 ############################ CODE COMMANDS ###################################
 ##############################################################################
@@ -149,6 +150,11 @@ process-dataset pd:
 	@$(RM_COMMAND) $(DATASET_FOLDER)/test.json
 
 
+test-dataset-loader tdl:
+	@echo "[Test dataset loader] Testing.."
+	@$(PYTHON_COMMAND) $(MAIN_DATASET_FILE) -c $(CONFIG_FILE)
+
+
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
 	@$(TENSORBOARD_COMMAND) --logdir=$(IMAGE_METADATA_PATH) --host 0.0.0.0
@@ -164,7 +170,6 @@ jupyter jp:
 run-test rtm: docker-print
 	@$(DOCKER_RUN_COMMAND)
 
-
 run-tensorboard rt: docker-print
 	@$(DOCKER_RUN_TENSORBOARD_COMMAND)  bash -c "make tensorboard IMAGE_METADATA_PATH=$(IMAGE_METADATA_PATH)"; \
 	status=$$?
@@ -176,6 +181,11 @@ run-jupyter rj: docker-print
 run-setup rpd: docker-print
 	@$(DOCKER_RUN_COMMAND) bash -c "make setup"; \
 	status=$$?
+
+run-dataset-loader rdl: docker-print
+	@$(DOCKER_RUN_COMMAND) bash -c "make test-dataset-loader CONFIG_FILE=$(CONFIG_FILE)"; \
+	status=$$?
+
 
 
 #PRIVATE

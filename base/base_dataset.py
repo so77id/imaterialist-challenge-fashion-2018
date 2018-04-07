@@ -10,9 +10,14 @@ class BaseDataset():
         self.mode = mode
 
     def init_iter(self, sess):
+        if self.mode != "test":
+            feed_dict={self.x: self.data["x"], self.y: self.data["y"]}
+        else:
+            feed_dict={self.x: self.data["x"]}
+
         sess.run(
             self.iterator.initializer,
-            feed_dict={self.x: self.data["x"], self.y: self.data["y"]},
+            feed_dict=feed_dict,
         )
 
     def next_batch(self, sess):
@@ -26,8 +31,12 @@ class BaseDataset():
         ) + 1
         # Creating TF datasets
         self.x = tf.placeholder(self.data["x"].dtype, self.data["x"].shape)
-        self.y = tf.placeholder(self.data["y"].dtype, self.data["y"].shape)
-        self.dataset = tf.data.Dataset.from_tensor_slices((self.x, self.y))
+        if self.mode != "test":
+            self.y = tf.placeholder(self.data["y"].dtype, self.data["y"].shape)
+            self.dataset = tf.data.Dataset.from_tensor_slices((self.x, self.y))
+        else:
+            self.dataset = tf.data.Dataset.from_tensor_slices((self.x))
+
         self.dataset = self.dataset.prefetch(500)
         self.dataset = self.dataset.shuffle(
             buffer_size=self.config.trainer.parameters.shuffle_buffer_size

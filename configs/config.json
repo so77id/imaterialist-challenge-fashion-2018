@@ -9,6 +9,20 @@
     "allow_soft_placement": true,
     "log_device_placement": false
   },
+  "network": {
+    "model": "model",
+    "parameters": {
+      "dropout": 0.8
+    }
+  },
+  "trainer": {
+    "parameters": {
+      "batch_size": 10,
+      "num_epochs": 2,
+      "shuffle_buffer_size": 10000,
+      "learning_rate": 0.001
+    }
+  },
   "dataset": {
     "original": {
       "path": "../datasets/kaggle/imaterialist-challenge-fashion-2018",
@@ -17,10 +31,10 @@
       "validation_folder": "validation"
     },
     "parameters": {
-      "width": 80,
-      "height": 80,
+      "width": 300,
+      "height": 300,
       "channels": 3,
-      "n_classes": 7
+      "n_classes": 229
     },
     "lists": {
       "folder": "lists",
