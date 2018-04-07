@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#https://stackoverflow.com/questions/46265835/how-to-debug-a-python-module-from-the-command-line
 
 from __future__ import print_function
 import pdb
