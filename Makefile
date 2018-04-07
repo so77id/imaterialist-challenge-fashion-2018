@@ -116,6 +116,9 @@ METADATA_FOLDER=$(IMAGE_METADATA_PATH)
 #FILES
 PROCESS_DATABASE_FILE=utils/dataset_utils/download.sh
 
+CONFIG_FILE=./configs/config.json
+
+CREATE_LIST_FILE=utils.dataset_utils.create_list
 #############################################################################
 ############################ CODE COMMANDS ###################################
 ##############################################################################
@@ -137,6 +140,7 @@ process-dataset pd:
 	@$(UNZIP_COMMAND) $(DATASET_FOLDER)/data.zip -d $(DATASET_FOLDER)
 
 	@$(BASH_COMMAND) $(PROCESS_DATABASE_FILE)
+	@$(PYTHON_COMMAND) $(CREATE_LIST_FILE) -c $(CONFIG_FILE)
 
 	@echo "[Dataset Processing] Deleting files.."
 	@$(RM_COMMAND) $(DATASET_FOLDER)/data.zip
