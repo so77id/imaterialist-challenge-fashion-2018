@@ -34,7 +34,7 @@ class Dataset(BaseDataset):
         imgs = []
         labels_one_hot = []
 
-        loop = tqdm(file_in, total=get_num_lines(dataset_original))
+        loop = tqdm(file, total=get_num_lines(self.list))
         for line in loop:
             splited_line = line.split('\n')[0].split(' ')
             # img_id = int(splited_line[0])
