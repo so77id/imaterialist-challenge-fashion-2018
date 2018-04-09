@@ -3,10 +3,12 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import pdb
 
+from tqdm import tqdm
+
 
 import cv2
 from base.base_dataset import BaseDataset
-from utils.utils import list_to_one_hot, get_filename
+from utils.utils import list_to_one_hot, get_filename, get_num_lines
 
 
 class Dataset(BaseDataset):
@@ -32,7 +34,8 @@ class Dataset(BaseDataset):
         imgs = []
         labels_one_hot = []
 
-        for line in file:
+        loop = tqdm(file_in, total=get_num_lines(dataset_original))
+        for line in loop:
             splited_line = line.split('\n')[0].split(' ')
             # img_id = int(splited_line[0])
             img_path = splited_line[1]
