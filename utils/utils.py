@@ -2,6 +2,8 @@ from __future__ import absolute_import, division, print_function
 
 import argparse
 import numpy as np
+import mmap
+
 
 def get_args():
     argparser = argparse.ArgumentParser(description=__doc__)
