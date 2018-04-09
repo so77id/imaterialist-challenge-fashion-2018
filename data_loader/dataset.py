@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
-import pdb
+import multiprocessing
 
 from tqdm import tqdm
 
@@ -9,6 +9,11 @@ from tqdm import tqdm
 import cv2
 from base.base_dataset import BaseDataset
 from utils.utils import list_to_one_hot, get_filename, get_num_lines
+
+SElF = None
+
+def unwrap_self_load_file(line):
+    return Dataset.load_file(SELF, line)
 
 
 class Dataset(BaseDataset):
@@ -34,26 +39,35 @@ class Dataset(BaseDataset):
         imgs = []
         labels_one_hot = []
 
-        loop = tqdm(file, total=get_num_lines(self.list))
-        for line in loop:
-            splited_line = line.split('\n')[0].split(' ')
-            # img_id = int(splited_line[0])
-            img_path = splited_line[1]
-            labels = np.array([int(l) for l in splited_line[2:]])
-            video_name = get_filename(img_path)
-            if self.config.global_parameters.debug:
-                print("Reading img:", video_name)
-            img = self.__load_image(img_path)
-            imgs.append(img)
-            if self.mode != "test":
-                labels_one_hot.append(list_to_one_hot(labels, self.config.dataset.parameters.n_classes))
-            # else:
-            #     labels_one_hot.append(np.zeros(self.config.dataset.parameters.n_classes))
+        global SELF
+        SELF = self
+        pool = multiprocessing.Pool(processes=self.config.dataset.parameters.load_processes)
+
+        with tqdm(total=get_num_lines(self.list)) as bar:
+            for img_label in pool.imap_unordered(unwrap_self_load_file, file):
+                imgs.append(img_label["x"])
+                if self.mode != "test":
+                    labels_one_hot.append(img_label["y"])
+                bar.update(1)
 
         imgs = np.array(imgs)
         labels_one_hot = np.array(labels_one_hot)
 
         return {"x": imgs, "y": labels_one_hot}
+
+    def load_file(self, line):
+        splited_line = line.split('\n')[0].split(' ')
+        # img_id = int(splited_line[0])
+        img_path = splited_line[1]
+        labels = np.array([int(l) for l in splited_line[2:]])
+        video_name = get_filename(img_path)
+        if self.config.global_parameters.debug:
+            print("Reading img:", video_name)
+        img = self.__load_image(img_path)
+        if self.mode != "test":
+            labels = list_to_one_hot(labels, self.config.dataset.parameters.n_classes)
+
+        return {"x": img, "y": labels}
 
     def __load_image(self, img_path):
         img = cv2.imread(img_path)
