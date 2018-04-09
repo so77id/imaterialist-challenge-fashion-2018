@@ -99,9 +99,10 @@ MKDIR_COMMAND=mkdir
 BASH_COMMAND=bash
 TENSORBOARD_COMMAND=tensorboard
 JUPYTER_COMMAND=jupyter
-WGET_COMMNAND=wget
+WGET_COMMAND=wget
 UNZIP_COMMAND=unzip
 RM_COMMAND=rm
+MV_COMMAND=mv
 
 # Dataset VARS
 DATASET_FOLDER=$(IMAGE_DATASETS_PATH)/kaggle/imaterialist-challenge-fashion-2018
@@ -120,12 +121,25 @@ CONFIG_FILE=./configs/config.json
 
 CREATE_LIST_FILE=utils.dataset_utils.create_list
 MAIN_DATASET_FILE=mains.dataset_main
+KERAS_MAIN_FILE=mains.keras_main
+
+
+# MODEL CHECKPOINTS URLS KERAS
+IMAGENET_CHECKPOINTS_FOLDER=./imagenet_checkpoints
+INCEPTION_CHECKPOINT_URL=https://github.com/kentsommer/keras-inceptionV4/releases/download/2.0/inception-v4_weights_tf_dim_ordering_tf_kernels.h5
+INCEPTION_CHECKPOINT_FILENAME=inception-v4_weights_tf_dim_ordering_tf_kernels.h5
+
+RESNET_50_CHECKPOINT_URL=https://github.com/fchollet/deep-learning-models/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels.h5
+RESNET_50_CHECKPOINT_FILENAME=resnet50_weights_tf_dim_ordering_tf_kernels.h5
+
+DENSENET_121_CHECKPOINT_URL=http://www.recod.ic.unicamp.br/\~mrodriguez/densenet121_weights_tf.h5
+DENSENET_121_CHECKPOINT_FILENAME=densenet121_weights_tf.h5
 #############################################################################
 ############################ CODE COMMANDS ###################################
 ##############################################################################
 all: help
 
-setup s: setup-folder process-dataset
+setup s: setup-checkpoints
 	@echo "[Setup] Finish.."
 
 setup-folder sf:
@@ -137,7 +151,7 @@ setup-folder sf:
 
 process-dataset pd:
 	@echo "[Dataset Processing] Downloading.."
-	@$(WGET_COMMNAND) $(DATA_JSON_URL) -P $(DATASET_FOLDER)
+	@$(WGET_COMMAND) $(DATA_JSON_URL) -P $(DATASET_FOLDER)
 	@$(UNZIP_COMMAND) $(DATASET_FOLDER)/data.zip -d $(DATASET_FOLDER)
 
 	@$(BASH_COMMAND) $(PROCESS_DATABASE_FILE)
@@ -150,10 +164,25 @@ process-dataset pd:
 	@$(RM_COMMAND) $(DATASET_FOLDER)/test.json
 
 
+setup-checkpoints sch:
+	@echo "[Setup Checkpoints] Downloading.."
+	@$(MKDIR_COMMAND) -p $(IMAGENET_CHECKPOINTS_FOLDER)
+	@$(WGET_COMMAND) $(INCEPTION_CHECKPOINT_URL)
+	@$(MV_COMMAND) $(INCEPTION_CHECKPOINT_FILENAME) $(IMAGENET_CHECKPOINTS_FOLDER)
+
+	@$(WGET_COMMAND) $(RESNET_50_CHECKPOINT_URL)
+	@$(MV_COMMAND) $(RESNET_50_CHECKPOINT_FILENAME) $(IMAGENET_CHECKPOINTS_FOLDER)
+
+	@$(WGET_COMMAND) $(DENSENET_121_CHECKPOINT_URL)
+	@$(MV_COMMAND) $(DENSENET_121_CHECKPOINT_FILENAME) $(IMAGENET_CHECKPOINTS_FOLDER)
+
 test-dataset-loader tdl:
 	@echo "[Test dataset loader] Testing.."
 	@$(PYTHON_COMMAND) $(MAIN_DATASET_FILE) -c $(CONFIG_FILE)
 
+train-keras tk:
+	@echo "[Train Keras] Trainning.."
+	@$(PYTHON_COMMAND) $(KERAS_MAIN_FILE) -c $(CONFIG_FILE)
 
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
@@ -184,6 +213,10 @@ run-setup rpd: docker-print
 
 run-dataset-loader rdl: docker-print
 	@$(DOCKER_RUN_COMMAND) bash -c "make test-dataset-loader CONFIG_FILE=$(CONFIG_FILE)"; \
+	status=$$?
+
+run-train-keras rtk: docker-print
+	@$(DOCKER_RUN_COMMAND) bash -c "make train-keras CONFIG_FILE=$(CONFIG_FILE)"; \
 	status=$$?
 
 

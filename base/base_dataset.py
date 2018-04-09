@@ -26,6 +26,9 @@ class BaseDataset():
     def load_data(self):
         # Loading dataset
         self.data = self.load_dataset()
+        if self.config.dataset.parameters.load_mode == "keras":
+            return
+            
         self.num_batch_per_epoch = (
             self.data["x"].shape[0] // self.config.trainer.parameters.batch_size
         ) + 1

@@ -1,0 +1,67 @@
+{
+  "global_parameters": {
+    "debug": false,
+    "display": false
+  },
+  "tensorflow_configs": {
+    "device": "/gpu:0",
+    "per_process_gpu_memory_fraction": 0.9,
+    "allow_soft_placement": true,
+    "log_device_placement": false
+  },
+  "trainer": {
+    "parameters": {
+      "batch_size": 40,
+      "n_epoch": 30,
+      "loss_function": "binary_crossentropy",
+      "optimizer": {
+        "name": "rmsprop",
+        "lr": 0.001,
+        "rho": 0.9,
+        "epsilon": 1e-08,
+        "decay": 0.0
+      }
+    }
+  },
+  "network": {
+    "parameters": {
+      "dropout_keep_prob": 0.2,
+      "model_name": "inception_v4",
+      "checkpoint": "./metadata/inception_v4/23-11-2017/7/checkpoints/model.h5"
+    },
+    "metadata": {
+      "path": "./metadata"
+    }
+  },
+  "dataset": {
+    "original": {
+      "path": "../datasets/kaggle/imaterialist-challenge-fashion-2018",
+      "train_folder": "train",
+      "test_folder": "test",
+      "validation_folder": "validation"
+    },
+    "parameters": {
+      "load_mode": "keras",
+      "width": 299,
+      "height": 299,
+      "channels": 3,
+      "n_classes": 228
+    },
+    "lists": {
+      "folder": "lists",
+      "train": "train.list",
+      "validation": "validation.list",
+      "test": "test.list"
+    }
+  },
+  "metadata": {
+    "path": "../metadata/ck-experiments",
+    "models": {
+      "folder": "models/model"
+    },
+    "logs": {
+      "train_folder": "train",
+      "test_folder": "test"
+    }
+  }
+}
