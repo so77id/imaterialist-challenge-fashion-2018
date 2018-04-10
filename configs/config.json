@@ -31,6 +31,8 @@
       "validation_folder": "validation"
     },
     "parameters": {
+      "load_mode": "tf",
+      "load_type": "h5",
       "width": 300,
       "height": 300,
       "channels": 3,
@@ -41,6 +43,14 @@
       "train": "train.list",
       "validation": "validation.list",
       "test": "test.list"
+    },
+    "h5": {
+      "train_pattern": "train",
+      "test_pattern": "test",
+      "validation_pattern": "validation"
+    },
+    "folders": {
+      "h5_folder": "h5"
     }
   },
   "metadata": {
