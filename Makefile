@@ -182,6 +182,7 @@ test-dataset-loader tdl:
 
 train-keras tk:
 	@echo "[Train Keras] Trainning.."
+	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
 	@$(PYTHON_COMMAND) $(KERAS_MAIN_FILE) -c $(CONFIG_FILE)
 
 tensorboard tb:
