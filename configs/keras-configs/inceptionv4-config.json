@@ -11,7 +11,7 @@
   },
   "trainer": {
     "parameters": {
-      "batch_size": 40,
+      "batch_size": 100,
       "n_epoch": 30,
       "loss_function": "binary_crossentropy",
       "optimizer": {
@@ -42,9 +42,10 @@
     },
     "parameters": {
       "load_mode": "keras",
-      "load_processes": 40,
-      "width": 299,
-      "height": 299,
+      "load_type": "h5",
+      "load_processes": 30,
+      "width": 300,
+      "height": 300,
       "channels": 3,
       "n_classes": 229
     },
@@ -53,6 +54,14 @@
       "train": "train.list",
       "validation": "validation.list",
       "test": "test.list"
+    },
+    "h5": {
+      "train_pattern": "train",
+      "test_pattern": "test",
+      "validation_pattern": "validation"
+    },
+    "folders": {
+      "h5_folder": "h5"
     }
   },
   "metadata": {
