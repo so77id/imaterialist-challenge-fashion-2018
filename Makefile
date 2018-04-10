@@ -217,7 +217,7 @@ run-dataset-loader rdl: docker-print
 	status=$$?
 
 run-train-keras rtk: docker-print
-	@$(DOCKER_RUN_COMMAND) bash -c "make train-keras CONFIG_FILE=$(CONFIG_FILE)"; \
+	@$(DOCKER_RUN_COMMAND) bash -c "make train-keras CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
 	status=$$?
 
 
