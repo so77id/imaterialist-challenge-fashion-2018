@@ -33,6 +33,7 @@
     "parameters": {
       "load_mode": "tf",
       "load_type": "h5",
+      "load_processes": 30,
       "width": 300,
       "height": 300,
       "channels": 3,
