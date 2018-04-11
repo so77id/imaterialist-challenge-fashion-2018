@@ -26,8 +26,8 @@
   "network": {
     "parameters": {
       "dropout_keep_prob": 0.2,
-      "model_name": "inception_v4",
-      "checkpoint": "./metadata/inception_v4/23-11-2017/7/checkpoints/model.h5"
+      "model_name": "densenet_121",
+      "checkpoint": "./metadata/densenet121/23-11-2017/7/checkpoints/model.h5"
     },
     "metadata": {
       "path": "./metadata"

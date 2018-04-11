@@ -46,7 +46,7 @@ def main():
     # Callbacks
     tensorboard = TensorBoard(log_dir=logs_path, histogram_freq=0, write_graph=True, write_images=False)
 
-    filepath = "{}/weights-improvement-{epoch:02d}-{val_fbeta:.2f}.hdf5".format(checkpoint_path)
+    filepath = checkpoint_path + "/weights-improvement-{epoch:02d}-{val_fbeta:.2f}.hdf5"
     checkpoint = ModelCheckpoint(filepath, monitor='val_fbeta', verbose=1, save_best_only=True, mode='max')
 
     # Fit model
@@ -58,7 +58,7 @@ def main():
               verbose=1,
               callbacks=[tensorboard, checkpoint],
               validation_data=(dataset_val.data["x"], dataset_val.data["y"]))
-    # Save model
+    # Save final state model
     model.save_weights("{}/final_model.hdf5".format(checkpoint_path))
 
 
