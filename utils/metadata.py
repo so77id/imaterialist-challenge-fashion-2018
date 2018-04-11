@@ -21,7 +21,7 @@ def get_metadata_paths(CONFIG, ARGS):
     os.makedirs(checkpoint_path, exist_ok=True)
     os.makedirs(logs_path, exist_ok=True)
 
-    checkpoint_path = "{}/{}".format(checkpoint_path, "model.h5")
+    # checkpoint_path = "{}/{}".format(checkpoint_path, "model.h5")
 
     shutil.copy(ARGS.config_file, "{}/config.json".format(metadata_path))
 

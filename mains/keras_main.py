@@ -7,7 +7,7 @@ from utils.optimizers import optimizer_factory
 from models.keras_models.factory import model_factory
 from data_loader.dataset import Dataset
 
-from keras.callbacks import TensorBoard
+from keras.callbacks import TensorBoard, ModelCheckpoint
 
 from utils.config import process_config
 from utils.utils import get_args
@@ -43,19 +43,23 @@ def main():
     # Creating trainner
     model.compile(optimizer=optimizer, loss=config.trainer.parameters.loss_function, metrics=[fbeta])
 
-    # Fit model
+    # Callbacks
     tensorboard = TensorBoard(log_dir=logs_path, histogram_freq=0, write_graph=True, write_images=False)
 
+    filepath = "{}/weights-improvement-{epoch:02d}-{val_fbeta:.2f}.hdf5".format(checkpoint_path)
+    checkpoint = ModelCheckpoint(filepath, monitor='val_fbeta', verbose=1, save_best_only=True, mode='max')
+
+    # Fit model
     model.fit(dataset_train.data["x"],
               dataset_train.data["y"],
               batch_size=batch_size,
               epochs=n_epoch,
               shuffle=True,
               verbose=1,
-              callbacks=[tensorboard],
+              callbacks=[tensorboard, checkpoint],
               validation_data=(dataset_val.data["x"], dataset_val.data["y"]))
     # Save model
-    model.save_weights(checkpoint_path)
+    model.save_weights("{}/final_model.hdf5".format(checkpoint_path))
 
 
 if __name__ == "__main__":
