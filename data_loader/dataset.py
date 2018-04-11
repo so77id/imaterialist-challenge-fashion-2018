@@ -50,6 +50,7 @@ class Dataset(BaseDataset):
                     labels_one_hot.append(img_label["y"])
                 bar.update(1)
 
+        pool.terminate()
         imgs = np.array(imgs)
         labels_one_hot = np.array(labels_one_hot)
 

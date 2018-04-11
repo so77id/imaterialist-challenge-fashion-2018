@@ -64,7 +64,7 @@ class DatasetGenerator(object):
                 if self.mode != "test":
                     labels_one_hot.append(label)
                 bar.update(1)
-
+        pool.terminate()
         labels_one_hot = np.array(labels_one_hot)
 
         return paths, labels_one_hot
@@ -119,7 +119,7 @@ class DatasetGenerator(object):
 
             # Store class
             y[i] = self.labels[ID]
-        
+
         return (X, y)
 
     def __load_image(self, img_path):
