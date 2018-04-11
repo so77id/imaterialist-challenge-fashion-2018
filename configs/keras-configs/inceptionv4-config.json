@@ -11,8 +11,8 @@
   },
   "trainer": {
     "parameters": {
-      "batch_size": 100,
-      "n_epoch": 30,
+      "batch_size": 5,
+      "num_epochs": 30,
       "loss_function": "binary_crossentropy",
       "optimizer": {
         "name": "rmsprop",
@@ -42,10 +42,10 @@
     },
     "parameters": {
       "load_mode": "keras",
-      "load_type": "h5",
+      "load_type": "generator",
       "load_processes": 30,
-      "width": 300,
-      "height": 300,
+      "width": 299,
+      "height": 299,
       "channels": 3,
       "n_classes": 229
     },
