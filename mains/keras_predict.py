@@ -41,7 +41,7 @@ def main():
 
     # Writing prediction file
     with open(predict_file, 'w') as writer, open(prob_predict_file, 'w') as prob_writer:
-        writer.write("id,predicted\n")
+        writer.write("image_id,label_id\n")
         for name, labels, prob_labels in zip(dataset_test.data["file_names"][idxs], test_Y_[idxs], test_Y[idxs]):
 
             labels_str = " ".join(map(str, np.where(labels == 1)[0]))
