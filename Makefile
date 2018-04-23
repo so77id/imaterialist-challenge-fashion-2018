@@ -122,6 +122,7 @@ CONFIG_FILE=./configs/config.json
 CREATE_LIST_FILE=utils.dataset_utils.create_list
 MAIN_DATASET_FILE=mains.dataset_main
 KERAS_MAIN_FILE=mains.keras_main
+KERAS_PREDICT_FILE=mains.keras_predict
 
 
 # MODEL CHECKPOINTS URLS KERAS
@@ -185,6 +186,11 @@ train-keras tk:
 	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
 	@$(PYTHON_COMMAND) $(KERAS_MAIN_FILE) -c $(CONFIG_FILE)
 
+predict-keras pk:
+	@echo "[Predict Keras] Predicting.."
+	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
+	@$(PYTHON_COMMAND) $(KERAS_PREDICT_FILE) -c $(CONFIG_FILE)
+
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
 	@$(TENSORBOARD_COMMAND) --logdir=$(IMAGE_METADATA_PATH) --host 0.0.0.0
@@ -220,6 +226,9 @@ run-train-keras rtk: docker-print
 	@$(DOCKER_RUN_COMMAND) bash -c "make train-keras CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
 	status=$$?
 
+run-predict-keras rpk: docker-print
+	@$(DOCKER_RUN_COMMAND) bash -c "make predict-keras CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
+	status=$$?
 
 
 #PRIVATE
