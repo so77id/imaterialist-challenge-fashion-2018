@@ -24,10 +24,18 @@
     }
   },
   "network": {
+    "predict": {
+      "parameters": {
+        "threshold": 0.5,
+        "checkpoint": "./imagenet_checkpoints/inception-v4_weights_tf_dim_ordering_tf_kernels.h5",
+        "predict_path": "./metadata/inception_v4/predicts/imagenet",
+        "predict_file": "predict.csv",
+        "prob_predict_file": "predict_probs.csv"
+      }
+    },
     "parameters": {
       "dropout_keep_prob": 0.2,
-      "model_name": "inception_v4",
-      "checkpoint": "./metadata/inception_v4/23-11-2017/7/checkpoints/model.h5"
+      "model_name": "inception_v4"
     },
     "metadata": {
       "path": "./metadata"
