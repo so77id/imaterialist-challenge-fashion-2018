@@ -38,6 +38,7 @@ class Dataset(BaseDataset):
 
         imgs = []
         labels_one_hot = []
+        file_names = []
 
         global SELF
         SELF = self
@@ -48,26 +49,29 @@ class Dataset(BaseDataset):
                 imgs.append(img_label["x"])
                 if self.mode != "test":
                     labels_one_hot.append(img_label["y"])
+                else:
+                    file_names.append(img_label["file_name"])
                 bar.update(1)
         pool.terminate()
         imgs = np.array(imgs)
         labels_one_hot = np.array(labels_one_hot)
+        file_names = np.array(file_names)
 
-        return {"x": imgs, "y": labels_one_hot}
+        return {"x": imgs, "y": labels_one_hot, "file_names": file_names}
 
     def load_file(self, line):
         splited_line = line.split('\n')[0].split(' ')
         # img_id = int(splited_line[0])
         img_path = splited_line[1]
         labels = np.array([int(l) for l in splited_line[2:]])
-        video_name = get_filename(img_path)
+        video_name = get_filename(img_path).split(".")[0]
         if self.config.global_parameters.debug:
             print("Reading img:", video_name)
         img = self.__load_image(img_path)
         if self.mode != "test":
             labels = list_to_one_hot(labels, self.config.dataset.parameters.n_classes)
 
-        return {"x": img, "y": labels}
+        return {"x": img, "y": labels, "file_name": int(video_name)}
 
     def __load_image(self, img_path):
         img = cv2.imread(img_path)
