@@ -1,13 +1,13 @@
-from keras.applications.densenet import DenseNet121
+from keras.applications.resnet50 import ResNet50
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout, Flatten, Input
 
 
-def densenet121_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
+def resnet50_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
     # this could also be the output a different Keras model or layer
     input_tensor = Input(shape=(img_rows, img_cols, channels))  # this assumes K.image_data_format() == 'channels_last'
     # create the base pre-trained model
-    base_model = DenseNet121(input_tensor=input_tensor,weights='imagenet', include_top=False)
+    base_model = ResNet50(input_tensor=input_tensor, weights='imagenet', include_top=False)
 
     # add a global spatial average pooling layer
     x = base_model.output
