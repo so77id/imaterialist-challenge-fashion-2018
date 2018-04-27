@@ -26,7 +26,7 @@
   "network": {
     "predict": {
       "parameters": {
-        "threshold": 0.5,
+        "threshold": 0.2,
         "checkpoint": "./imagenet_checkpoints/inception-v4_weights_tf_dim_ordering_tf_kernels.h5",
         "predict_path": "./metadata/inception_v4/predicts/imagenet",
         "predict_file": "predict.csv",
