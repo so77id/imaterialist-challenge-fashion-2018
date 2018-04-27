@@ -6,9 +6,9 @@ from models.keras_models.resnet_50_keras import resnet50_keras_model
 from models.keras_models.densenet_121 import densenet121_model
 from models.keras_models.densenet_121_keras import densenet121_keras_model
 
-
 from models.keras_models.xception import xception_model
 
+from models.keras_models.inception_resnet_v2 import inception_resnet_v2_model
 
 def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout_keep_prob=0, checkpoint="", freeze=False):
 
@@ -22,6 +22,8 @@ def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout
         model = densenet121_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
     elif model_name == 'xception':
         model = xception_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
+    elif model_name == 'inception_resnet_v2':
+        model = inception_resnet_v2_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
 
     if checkpoint != '':
         print("Loading checkpoint:", checkpoint)

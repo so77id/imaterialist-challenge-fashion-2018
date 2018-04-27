@@ -1,13 +1,13 @@
-from keras.applications.resnet50 import ResNet50
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout, Input
 
 
-def resnet50_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
+def inception_resnet_v2_model(img_rows=299, img_cols=299, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
     # this could also be the output a different Keras model or layer
     input_tensor = Input(shape=(img_rows, img_cols, channels))  # this assumes K.image_data_format() == 'channels_last'
     # create the base pre-trained model
-    base_model = ResNet50(input_tensor=input_tensor, weights='imagenet', include_top=False)
+    base_model = InceptionResNetV2(input_tensor=input_tensor, weights='imagenet', include_top=False)
 
     # add a global spatial average pooling layer
     x = base_model.output
@@ -19,7 +19,7 @@ def resnet50_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=100
     predictions = Dense(units=num_classes, activation='sigmoid')(x)
 
     # this is the model we will train
-    model = Model(inputs=base_model.input, outputs=predictions, name='ResNet50')
+    model = Model(inputs=base_model.input, outputs=predictions, name='InceptionResNetV2')
 
     # first: train only the top layers (which were randomly initialized)
     # i.e. freeze all convolutional InceptionV3 layers
