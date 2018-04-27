@@ -28,7 +28,7 @@
       "parameters": {
         "threshold": 0.2,
         "checkpoint": "",
-        "predict_path": "./metadata/densenet_121/predicts/imagenet",
+        "predict_path": "./metadata/xception/predicts/imagenet",
         "predict_file": "predict.csv",
         "prob_predict_file": "predict_probs.csv"
       }
@@ -36,7 +36,7 @@
     "parameters": {
       "freeze": false,
       "dropout_keep_prob": 0.2,
-      "model_name": "densenet_121"
+      "model_name": "xception"
     },
     "metadata": {
       "path": "./metadata"
@@ -54,8 +54,8 @@
       "load_type": "norm",
       "resize_method": "resize_and_fill",
       "load_processes": 30,
-      "width": 224,
-      "height": 224,
+      "width": 299,
+      "height": 299,
       "channels": 3,
       "n_classes": 229
     },
@@ -75,7 +75,7 @@
     }
   },
   "metadata": {
-    "path": "../metadata/densenet_121-experiments",
+    "path": "../metadata/xception-experiments",
     "models": {
       "folder": "models/model"
     },
