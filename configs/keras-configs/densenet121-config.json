@@ -12,7 +12,7 @@
   "trainer": {
     "parameters": {
       "batch_size": 40,
-      "n_epoch": 30,
+      "n_epoch": 15,
       "loss_function": "binary_crossentropy",
       "optimizer": {
         "name": "rmsprop",
@@ -24,10 +24,18 @@
     }
   },
   "network": {
+    "predict": {
+      "parameters": {
+        "threshold": 0.5,
+        "checkpoint": "",
+        "predict_path": "./metadata/inception_v4/predicts/imagenet",
+        "predict_file": "predict.csv",
+        "prob_predict_file": "predict_probs.csv"
+      }
+    },
     "parameters": {
       "dropout_keep_prob": 0.2,
-      "model_name": "densenet_121",
-      "checkpoint": "./metadata/densenet121/23-11-2017/7/checkpoints/model.h5"
+      "model_name": "inception_v4"
     },
     "metadata": {
       "path": "./metadata"

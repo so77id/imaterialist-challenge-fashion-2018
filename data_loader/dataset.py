@@ -70,7 +70,8 @@ class Dataset(BaseDataset):
         img = self.__load_image(img_path)
         if self.mode != "test":
             labels = list_to_one_hot(labels, self.config.dataset.parameters.n_classes)
-
+            video_name = video_name.split("_")[1]
+        
         return {"x": img, "y": labels, "file_name": int(video_name)}
 
     def __load_image(self, img_path):
