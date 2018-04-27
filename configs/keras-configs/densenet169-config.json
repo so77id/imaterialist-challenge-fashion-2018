@@ -1,0 +1,87 @@
+{
+  "global_parameters": {
+    "debug": false,
+    "display": false
+  },
+  "tensorflow_configs": {
+    "device": "/gpu:0",
+    "per_process_gpu_memory_fraction": 0.9,
+    "allow_soft_placement": true,
+    "log_device_placement": false
+  },
+  "trainer": {
+    "parameters": {
+      "batch_size": 30,
+      "n_epoch": 15,
+      "loss_function": "binary_crossentropy",
+      "optimizer": {
+        "name": "rmsprop",
+        "lr": 0.001,
+        "rho": 0.9,
+        "epsilon": 1e-08,
+        "decay": 0.0
+      }
+    }
+  },
+  "network": {
+    "predict": {
+      "parameters": {
+        "threshold": 0.2,
+        "checkpoint": "",
+        "predict_path": "./metadata/densenet_169/predicts/imagenet",
+        "predict_file": "predict.csv",
+        "prob_predict_file": "predict_probs.csv"
+      }
+    },
+    "parameters": {
+      "freeze": false,
+      "dropout_keep_prob": 0.2,
+      "model_name": "densenet_169"
+    },
+    "metadata": {
+      "path": "./metadata"
+    }
+  },
+  "dataset": {
+    "original": {
+      "path": "../datasets/kaggle/imaterialist-challenge-fashion-2018",
+      "train_folder": "train",
+      "test_folder": "test",
+      "validation_folder": "validation"
+    },
+    "parameters": {
+      "load_mode": "keras",
+      "load_type": "norm",
+      "resize_method": "resize_and_fill",
+      "load_processes": 30,
+      "width": 224,
+      "height": 224,
+      "channels": 3,
+      "n_classes": 229
+    },
+    "lists": {
+      "folder": "lists",
+      "train": "train.list",
+      "validation": "validation.list",
+      "test": "test.list"
+    },
+    "h5": {
+      "train_pattern": "train",
+      "test_pattern": "test",
+      "validation_pattern": "validation"
+    },
+    "folders": {
+      "h5_folder": "h5"
+    }
+  },
+  "metadata": {
+    "path": "../metadata/densenet_169-experiments",
+    "models": {
+      "folder": "models/model"
+    },
+    "logs": {
+      "train_folder": "train",
+      "test_folder": "test"
+    }
+  }
+}

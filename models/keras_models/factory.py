@@ -5,6 +5,7 @@ from models.keras_models.resnet_50_keras import resnet50_keras_model
 
 from models.keras_models.densenet_121 import densenet121_model
 from models.keras_models.densenet_121_keras import densenet121_keras_model
+from models.keras_models.densenet_169_keras import densenet169_keras_model
 
 from models.keras_models.xception import xception_model
 
@@ -20,6 +21,8 @@ def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout
     elif model_name == 'densenet_121':
         # model = densenet121_model(img_rows, img_cols, channels, num_classes=num_classes, dropout_rate=dropout_keep_prob)
         model = densenet121_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
+    elif model_name == 'densenet_169':
+        model = densenet169_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
     elif model_name == 'xception':
         model = xception_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob)
     elif model_name == 'inception_resnet_v2':
