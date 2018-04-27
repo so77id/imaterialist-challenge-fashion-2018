@@ -43,13 +43,13 @@ class Dataset(BaseDataset):
         n_lines = get_num_lines(self.list)
         print(n_lines)
 
-        imgs = np.zeros([n_lines, self.config.dataset.parameters.width, self.config.dataset.parameters.height, self.config.dataset.parameters.channels])
+        imgs = np.zeros([n_lines, self.config.dataset.parameters.width, self.config.dataset.parameters.height, self.config.dataset.parameters.channels], dtype=np.uint8)
         if self.mode != "test":
-            labels_one_hot = np.zeros([n_lines, self.config.dataset.parameters.n_classes])
-            file_names = np.array([])
+            labels_one_hot = np.zeros([n_lines, self.config.dataset.parameters.n_classes], dtype=np.uint8)
+            file_names = np.array([], dtype=np.uint8)
         else:
-            labels_one_hot = np.array([])
-            file_names = np.zeros([n_lines])
+            labels_one_hot = np.array([], dtype=np.uint8)
+            file_names = np.zeros([n_lines], dtype=np.uint8)
 
         global SELF
         SELF = self
