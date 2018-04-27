@@ -28,14 +28,14 @@
       "parameters": {
         "threshold": 0.2,
         "checkpoint": "",
-        "predict_path": "./metadata/densenet_121/predicts/imagenet",
+        "predict_path": "./metadata/resnet_50/predicts/imagenet",
         "predict_file": "predict.csv",
         "prob_predict_file": "predict_probs.csv"
       }
     },
     "parameters": {
       "dropout_keep_prob": 0.2,
-      "model_name": "densenet_121"
+      "model_name": "resnet_50"
     },
     "metadata": {
       "path": "./metadata"
@@ -74,7 +74,7 @@
     }
   },
   "metadata": {
-    "path": "../metadata/densenet_121-experiments",
+    "path": "../metadata/resnet_50-experiments",
     "models": {
       "folder": "models/model"
     },
