@@ -7,7 +7,7 @@ def densenet121_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=
     # this could also be the output a different Keras model or layer
     input_tensor = Input(shape=(img_rows, img_cols, channels))  # this assumes K.image_data_format() == 'channels_last'
     # create the base pre-trained model
-    base_model = DenseNet121(weights='imagenet', include_top=False)
+    base_model = DenseNet121(input_tensor=input_tensor,weights='imagenet', include_top=False)
 
     # add a global spatial average pooling layer
     x = base_model.output
