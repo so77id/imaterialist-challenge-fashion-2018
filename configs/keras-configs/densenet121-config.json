@@ -26,16 +26,16 @@
   "network": {
     "predict": {
       "parameters": {
-        "threshold": 0.5,
+        "threshold": 0.2,
         "checkpoint": "",
-        "predict_path": "./metadata/inception_v4/predicts/imagenet",
+        "predict_path": "./metadata/densenet_121/predicts/imagenet",
         "predict_file": "predict.csv",
         "prob_predict_file": "predict_probs.csv"
       }
     },
     "parameters": {
       "dropout_keep_prob": 0.2,
-      "model_name": "inception_v4"
+      "model_name": "densenet_121"
     },
     "metadata": {
       "path": "./metadata"
@@ -74,7 +74,7 @@
     }
   },
   "metadata": {
-    "path": "../metadata/densenet121-experiments",
+    "path": "../metadata/densenet_121-experiments",
     "models": {
       "folder": "models/model"
     },
