@@ -9,18 +9,36 @@
     "allow_soft_placement": true,
     "log_device_placement": false
   },
-  "network": {
-    "model": "model",
-    "parameters": {
-      "dropout": 0.8
-    }
-  },
   "trainer": {
     "parameters": {
-      "batch_size": 10,
-      "num_epochs": 2,
-      "shuffle_buffer_size": 10000,
-      "learning_rate": 0.001
+      "batch_size": 40,
+      "n_epoch": 15,
+      "loss_function": "binary_crossentropy",
+      "optimizer": {
+        "name": "rmsprop",
+        "lr": 0.001,
+        "rho": 0.9,
+        "epsilon": 1e-08,
+        "decay": 0.0
+      }
+    }
+  },
+  "network": {
+    "predict": {
+      "parameters": {
+        "threshold": 0.5,
+        "checkpoint": "./imagenet_checkpoints/inception-v4_weights_tf_dim_ordering_tf_kernels.h5",
+        "predict_path": "./metadata/inception_v4/predicts/imagenet",
+        "predict_file": "predict.csv",
+        "prob_predict_file": "predict_probs.csv"
+      }
+    },
+    "parameters": {
+      "dropout_keep_prob": 0.2,
+      "model_name": "inception_v4"
+    },
+    "metadata": {
+      "path": "./metadata"
     }
   },
   "dataset": {
@@ -31,11 +49,12 @@
       "validation_folder": "validation"
     },
     "parameters": {
-      "load_mode": "tf",
-      "load_type": "h5",
-      "load_processes": 30,
-      "width": 300,
-      "height": 300,
+      "load_mode": "keras",
+      "load_type": "norm",
+      "resize_method": "resize_and_fill",
+      "load_processes": 1,
+      "width": 299,
+      "height": 299,
       "channels": 3,
       "n_classes": 229
     },
@@ -55,7 +74,7 @@
     }
   },
   "metadata": {
-    "path": "../metadata/ck-experiments",
+    "path": "../metadata/inceptionv4-experiments",
     "models": {
       "folder": "models/model"
     },

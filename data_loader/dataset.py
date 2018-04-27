@@ -71,14 +71,58 @@ class Dataset(BaseDataset):
         if self.mode != "test":
             labels = list_to_one_hot(labels, self.config.dataset.parameters.n_classes)
             video_name = video_name.split("_")[1]
-        
+
         return {"x": img, "y": labels, "file_name": int(video_name)}
 
     def __load_image(self, img_path):
         img = cv2.imread(img_path)
-        width_ = self.config.dataset.parameters.width
-        height_ = self.config.dataset.parameters.height
+
+        if self.config.dataset.parameters.resize_method == "resize_and_fill":
+            img = self.resize_and_fill(img)
+        elif self.config.dataset.parameters.resize_method == "resize_and_crop":
+            img = self.resize_and_crop(img)
+
+        return img
+
+    def resize_and_fill(self, img):
+        fwidth = self.config.dataset.parameters.width
+        fheight = self.config.dataset.parameters.height
+
+
+        height, width, channels = img.shape
+        blank_image = np.ones((fheight, fwidth, channels), np.uint8)*255
+
+        if width > height:
+            width_ = fwidth
+            height_ = (height * width_)//width
+        else:
+            height_ = fheight
+            width_ =  (width * height_)//height
 
         img = cv2.resize(img, (width_, height_))
+
+        h_offset = (fheight - height_)//2
+        w_offset = (fwidth - width_)//2
+
+        blank_image[h_offset:h_offset + height_, w_offset:w_offset + width_] = img
+
+        return blank_image
+
+
+    def resize_and_crop(self, img):
+        fwidth = self.config.dataset.parameters.width
+        fheight = self.config.dataset.parameters.height
+
+        height, width, channels = img.shape
+        if width > height:
+            height_ = fheight
+            width_ =  (width * height_)//height
+        else:
+            width_ = fwidth
+            height_ = (height * width_)//width
+
+        img = cv2.resize(img, (width_, height_))
+
+        img = img[(height_ - fheight)//2 : (height_ + fheight)//2, (width_ - fwidth)//2 : (width_ + fwidth)//2]
 
         return img

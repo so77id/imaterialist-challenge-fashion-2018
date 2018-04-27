@@ -51,7 +51,8 @@
     "parameters": {
       "load_mode": "keras",
       "load_type": "norm",
-      "load_processes": 30,
+      "resize_method": "resize_and_fill",
+      "load_processes": 1,
       "width": 299,
       "height": 299,
       "channels": 3,
