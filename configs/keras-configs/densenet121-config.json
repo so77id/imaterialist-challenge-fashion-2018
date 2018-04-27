@@ -54,8 +54,8 @@
       "load_type": "norm",
       "resize_method": "resize_and_fill",
       "load_processes": 30,
-      "width": 299,
-      "height": 299,
+      "width": 224,
+      "height": 224,
       "channels": 3,
       "n_classes": 229
     },

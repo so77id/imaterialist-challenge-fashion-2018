@@ -1,6 +1,6 @@
 from keras.applications.resnet50 import ResNet50
 from keras.models import Model
-from keras.layers import Dense, GlobalAveragePooling2D, Dropout, Flatten, Input
+from keras.layers import Dense, GlobalAveragePooling2D, Dropout, Input
 
 
 def resnet50_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
@@ -13,7 +13,7 @@ def resnet50_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=100
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
     x = Dropout(dropout_keep_prob)(x)
-    x = Flatten()(x)
+    # x = Flatten()(x)
     x = Dense(1024, activation='relu')(x)
 
     predictions = Dense(units=num_classes, activation='sigmoid')(x)
