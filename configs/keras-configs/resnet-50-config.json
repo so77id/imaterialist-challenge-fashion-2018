@@ -34,6 +34,7 @@
       }
     },
     "parameters": {
+      "freeze": false,
       "dropout_keep_prob": 0.2,
       "model_name": "resnet_50"
     },

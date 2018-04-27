@@ -25,17 +25,25 @@ def main():
     model_name = config.network.parameters.model_name
     img_rows = int(config.dataset.parameters.height)
     img_cols = int(config.dataset.parameters.width)
-    channel = int(config.dataset.parameters.channels)
+    channels = int(config.dataset.parameters.channels)
     num_classes = int(config.dataset.parameters.n_classes)
     dropout_keep_prob = float(config.network.parameters.dropout_keep_prob)
     batch_size = int(config.trainer.parameters.batch_size)
     n_epoch = int(config.trainer.parameters.n_epoch)
+    freeze = int(config.network.parameters.freeze)
 
     # Get paths
     metadata_path, checkpoint_path, logs_path = get_metadata_paths(config, args)
 
     # Load model
-    model = model_factory(model_name, img_rows, img_cols, channel, num_classes, dropout_keep_prob)
+    model = model_factory(model_name=model_name,
+                          img_rows=img_rows,
+                          img_cols=img_cols,
+                          channels=channels,
+                          num_classes=num_classes,
+                          dropout_keep_prob=dropout_keep_prob,
+                          freeze=freeze,
+                          checkpoint="")
 
     # Loading optimizer
     optimizer = optimizer_factory(config.trainer.parameters.optimizer)
