@@ -36,32 +36,46 @@ class Dataset(BaseDataset):
         print("Loading dataset: {}".format(self.list))
         file = open(self.list, 'r')
 
-        imgs = []
-        labels_one_hot = []
-        file_names = []
+        # imgs = []
+        # labels_one_hot = []
+        # file_names = []
+
+        n_lines = get_num_lines(self.list)
+        print(n_lines)
+
+        imgs = np.zeros([n_lines, self.config.dataset.parameters.width, self.config.dataset.parameters.height, self.config.dataset.parameters.channels], dtype=np.uint8)
+        if self.mode != "test":
+            labels_one_hot = np.zeros([n_lines, self.config.dataset.parameters.n_classes], dtype=np.uint8)
+            file_names = np.array([], dtype=np.uint8)
+        else:
+            labels_one_hot = np.array([], dtype=np.uint8)
+            file_names = np.zeros([n_lines], dtype=np.uint8)
 
         global SELF
         SELF = self
         pool = multiprocessing.Pool(processes=self.config.dataset.parameters.load_processes)
 
-        with tqdm(total=get_num_lines(self.list)) as bar:
+        with tqdm(total=n_lines) as bar:
             for img_label in pool.imap_unordered(unwrap_self_load_file, file):
-                imgs.append(img_label["x"])
+                # imgs.append(img_label["x"])
+                imgs[img_label["img_id"] - 1] = img_label["x"]
                 if self.mode != "test":
-                    labels_one_hot.append(img_label["y"])
+                    labels_one_hot[img_label["img_id"] - 1] = img_label["y"]
+                    # labels_one_hot.append(img_label["y"])
                 else:
-                    file_names.append(img_label["file_name"])
+                    file_names[img_label["img_id"] - 1] = img_label["file_name"]
+                    # file_names.append(img_label["file_name"])
                 bar.update(1)
         pool.terminate()
-        imgs = np.array(imgs)
-        labels_one_hot = np.array(labels_one_hot)
-        file_names = np.array(file_names)
+        # imgs = np.array(imgs)
+        # labels_one_hot = np.array(labels_one_hot)
+        # file_names = np.array(file_names)
 
         return {"x": imgs, "y": labels_one_hot, "file_names": file_names}
 
     def load_file(self, line):
         splited_line = line.split('\n')[0].split(' ')
-        # img_id = int(splited_line[0])
+        img_id = int(splited_line[0])
         img_path = splited_line[1]
         labels = np.array([int(l) for l in splited_line[2:]])
         video_name = get_filename(img_path).split(".")[0]
@@ -72,7 +86,7 @@ class Dataset(BaseDataset):
             labels = list_to_one_hot(labels, self.config.dataset.parameters.n_classes)
             video_name = video_name.split("_")[1]
 
-        return {"x": img, "y": labels, "file_name": int(video_name)}
+        return {"x": img, "y": labels, "file_name": int(video_name), "img_id": img_id}
 
     def __load_image(self, img_path):
         img = cv2.imread(img_path)
