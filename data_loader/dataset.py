@@ -46,10 +46,10 @@ class Dataset(BaseDataset):
         imgs = np.zeros([n_lines, self.config.dataset.parameters.width, self.config.dataset.parameters.height, self.config.dataset.parameters.channels], dtype=np.uint8)
         if self.mode != "test":
             labels_one_hot = np.zeros([n_lines, self.config.dataset.parameters.n_classes], dtype=np.uint8)
-            file_names = np.array([], dtype=np.uint8)
+            file_names = np.array([], dtype=np.int)
         else:
             labels_one_hot = np.array([], dtype=np.uint8)
-            file_names = np.zeros([n_lines], dtype=np.uint8)
+            file_names = np.zeros([n_lines], dtype=np.int)
 
         global SELF
         SELF = self
