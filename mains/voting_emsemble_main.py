@@ -22,9 +22,12 @@ def main():
 
         prob_np_list.append(np.array(prob_list))
 
-    prob_np_list = np.array(prob_np_list)
 
-    prob_np_list = prob_np_list.sum(axis=0)
+    prob_np_list = np.array(prob_np_list)
+    # n_files = prob_np_list.shape[0]
+
+
+    prob_np_list = prob_np_list.mean(axis=0)
     prob_np_list_ = np.where(prob_np_list > config.threshold, 1, 0)
 
 
