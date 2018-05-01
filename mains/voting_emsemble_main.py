@@ -27,21 +27,35 @@ def main():
     # n_files = prob_np_list.shape[0]
 
 
-    prob_np_list = prob_np_list.mean(axis=0)
-    prob_np_list_ = np.where(prob_np_list > config.threshold, 1, 0)
+    # prob_np_list = prob_np_list.mean(axis=0)
+    prob_np_list = np.where(prob_np_list > config.threshold, 1, 0)
+    prob_np_list = prob_np_list.sum(axis=0)
+
+
+    prob_np_list_ = np.where(prob_np_list > 1, 1, 0)
 
 
 
-    # Writing prediction file
-    with open(config.predict_file, 'w') as writer, open(config.prob_predict_file, 'w') as prob_writer:
+    # # Writing prediction file
+    # with open(config.predict_file, 'w') as writer, open(config.prob_predict_file, 'w') as prob_writer:
+    #     writer.write("image_id,label_id\n")
+    #     for id, (prob_labels, labels) in enumerate(zip(prob_np_list, prob_np_list_)):
+    #
+    #         labels_str = " ".join(map(str, np.where(labels == 1)[0]))
+    #         prob_str = " ".join(map(str, prob_labels))
+    #
+    #         writer.write("{},{}\n".format(id+1, labels_str))
+    #         prob_writer.write("{},{}\n".format(id+1, prob_str))
+
+    with open(config.predict_file, 'w') as writer:
         writer.write("image_id,label_id\n")
-        for id, (prob_labels, labels) in enumerate(zip(prob_np_list, prob_np_list_)):
+        for id, labels in enumerate(prob_np_list_):
 
             labels_str = " ".join(map(str, np.where(labels == 1)[0]))
-            prob_str = " ".join(map(str, prob_labels))
+            # prob_str = " ".join(map(str, prob_labels))
 
             writer.write("{},{}\n".format(id+1, labels_str))
-            prob_writer.write("{},{}\n".format(id+1, prob_str))
+            # prob_writer.write("{},{}\n".format(id+1, prob_str))
 
 
 if __name__ == "__main__":
