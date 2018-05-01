@@ -3,7 +3,9 @@
   "predict_file": "./metadata/voting_emsemble.csv",
   "prob_predict_file": "./metadata/voting_emsemble_probs.csv",
   "prob_files": [
-    "./metadata/probs/inception_resnet_v2.csv",
-    "./metadata/probs/inception_resnet_v2.csv"
+    "./metadata/resnet_50/predicts/27-04-2018/3/predict_probs-03.csv",
+    "./metadata/densenet_121/predict/27-04-2018/7/predict_probs-12.csv",
+    "./metadata/densenet_169/predicts/28-04-2018/1/predict_probs-08.csv",
+    "./metadata/inception_resnet_v2/predicts/28-04-2018/1/predict_probs-07.csv"
   ]
 }
