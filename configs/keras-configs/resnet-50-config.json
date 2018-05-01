@@ -36,7 +36,9 @@
     "parameters": {
       "freeze": false,
       "dropout_keep_prob": 0.2,
-      "model_name": "resnet_50"
+      "model_name": "resnet_50",
+      "load_checkpoint": "./mvc_checkpoints/resnet_50-30-04-2018.hdf5",
+      "use_mvc": true
     },
     "metadata": {
       "path": "./metadata"

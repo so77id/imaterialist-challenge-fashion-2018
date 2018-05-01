@@ -104,5 +104,7 @@ metadata
 dataset
 dataset/*
 metadata/*
+mvc_checkpoints
+mvc_checkpoints/*
 
 *.h5*
