@@ -123,7 +123,7 @@ CREATE_LIST_FILE=utils.dataset_utils.create_list
 MAIN_DATASET_FILE=mains.dataset_main
 KERAS_MAIN_FILE=mains.keras_main
 KERAS_PREDICT_FILE=mains.keras_predict
-
+KERAS_VOTING_FILE=mains.voting_emsemble_main
 
 # MODEL CHECKPOINTS URLS KERAS
 IMAGENET_CHECKPOINTS_FOLDER=./imagenet_checkpoints
@@ -191,6 +191,12 @@ predict-keras pk:
 	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
 	@$(PYTHON_COMMAND) $(KERAS_PREDICT_FILE) -c $(CONFIG_FILE)
 
+
+voting-emsemble ve:
+	@echo "[Predict Keras with voting emsemble] Predicting.."
+	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
+	@$(PYTHON_COMMAND) $(KERAS_VOTING_FILE) -c $(CONFIG_FILE)
+
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
 	@$(TENSORBOARD_COMMAND) --logdir=$(IMAGE_METADATA_PATH) --host 0.0.0.0
@@ -230,6 +236,9 @@ run-predict-keras rpk: docker-print
 	@$(DOCKER_RUN_COMMAND) bash -c "make predict-keras CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
 	status=$$?
 
+run-voting_emsemble rvek: docker-print
+	@$(DOCKER_RUN_COMMAND) bash -c "make voting-emsemble CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
+	status=$$?
 
 #PRIVATE
 docker-print psd:
