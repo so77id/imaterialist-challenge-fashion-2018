@@ -31,6 +31,8 @@ def main():
     batch_size = int(config.trainer.parameters.batch_size)
     n_epoch = int(config.trainer.parameters.n_epoch)
     freeze = int(config.network.parameters.freeze)
+    use_mvc = config.network.parameters.use_mvc
+    # load_checkpoint = config.network.parameters.load_checkpoint
 
     # Get paths
     metadata_path, checkpoint_path, logs_path = get_metadata_paths(config, args)
@@ -43,7 +45,8 @@ def main():
                           num_classes=num_classes,
                           dropout_keep_prob=dropout_keep_prob,
                           freeze=freeze,
-                          checkpoint="")
+                          checkpoint="",
+                          use_mvc=use_mvc)
 
     # Loading optimizer
     optimizer = optimizer_factory(config.trainer.parameters.optimizer)

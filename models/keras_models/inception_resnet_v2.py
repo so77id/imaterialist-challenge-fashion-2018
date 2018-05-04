@@ -3,7 +3,7 @@ from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D, Dropout, Input
 
 
-def inception_resnet_v2_model(img_rows=299, img_cols=299, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2):
+def inception_resnet_v2_model(img_rows=299, img_cols=299, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2, use_mvc=False):
     # this could also be the output a different Keras model or layer
     input_tensor = Input(shape=(img_rows, img_cols, channels))  # this assumes K.image_data_format() == 'channels_last'
     # create the base pre-trained model
@@ -15,6 +15,11 @@ def inception_resnet_v2_model(img_rows=299, img_cols=299, channels=3, num_classe
     x = Dropout(dropout_keep_prob)(x)
     # x = Flatten()(x)
     x = Dense(1024, activation='relu')(x)
+
+    if use_mvc:
+            predictions = Dense(units=264, activation='sigmoid')(x)
+            model = Model(inputs=base_model.input, outputs=predictions)
+            model.load_weights("./mvc_checkpoints/inception_resnet_v2_mvc.hdf5")
 
     predictions = Dense(units=num_classes, activation='sigmoid')(x)
 

@@ -36,7 +36,8 @@
     "parameters": {
       "freeze": false,
       "dropout_keep_prob": 0.2,
-      "model_name": "inception_resnet_v2"
+      "model_name": "inception_resnet_v2",
+      "load_checkpoint": ""
     },
     "metadata": {
       "path": "./metadata"
