@@ -32,6 +32,7 @@ def main():
     n_epoch = int(config.trainer.parameters.n_epoch)
     freeze = int(config.network.parameters.freeze)
     use_mvc = config.network.parameters.use_mvc
+    checkpoint = config.network.parameters.checkpoint
     # load_checkpoint = config.network.parameters.load_checkpoint
 
     # Get paths
@@ -45,7 +46,7 @@ def main():
                           num_classes=num_classes,
                           dropout_keep_prob=dropout_keep_prob,
                           freeze=freeze,
-                          checkpoint="",
+                          checkpoint=checkpoint,
                           use_mvc=use_mvc)
 
     # Loading optimizer
