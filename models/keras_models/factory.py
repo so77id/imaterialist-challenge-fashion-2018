@@ -31,7 +31,7 @@ def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout
     elif model_name == 'inception_resnet_v2':
         model = inception_resnet_v2_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
 
-    if checkpoint != '':
+    if checkpoint != '' and use_mvc == False:
         print("Loading checkpoint:", checkpoint)
         model.load_weights(checkpoint, by_name=True)
 
