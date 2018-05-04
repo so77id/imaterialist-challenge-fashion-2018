@@ -19,6 +19,7 @@ def inception_resnet_v2_model(img_rows=299, img_cols=299, channels=3, num_classe
     if use_mvc:
             predictions = Dense(units=264, activation='sigmoid')(x)
             model = Model(inputs=base_model.input, outputs=predictions)
+            print("Loading:", "./mvc_checkpoints/inception_resnet_v2_mvc.hdf5")
             model.load_weights("./mvc_checkpoints/inception_resnet_v2_mvc.hdf5")
 
     predictions = Dense(units=num_classes, activation='sigmoid')(x)

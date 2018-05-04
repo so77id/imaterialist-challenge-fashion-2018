@@ -19,6 +19,7 @@ def xception_model(img_rows=299, img_cols=299, channels=3, num_classes=1000, fre
     if use_mvc:
             predictions = Dense(units=264, activation='sigmoid')(x)
             model = Model(inputs=base_model.input, outputs=predictions)
+            print("Loading:", "./mvc_checkpoints/xception_mvc.hdf5")
             model.load_weights("./mvc_checkpoints/xception_mvc.hdf5")
 
     predictions = Dense(units=num_classes, activation='sigmoid')(x)

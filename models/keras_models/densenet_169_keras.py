@@ -19,6 +19,7 @@ def densenet169_keras_model(img_rows=224, img_cols=224, channels=3, num_classes=
     if use_mvc:
             predictions = Dense(units=264, activation='sigmoid')(x)
             model = Model(inputs=base_model.input, outputs=predictions)
+            print("Loading:", "./mvc_checkpoints/densenet169_mvc.hdf5")
             model.load_weights("./mvc_checkpoints/densenet169_mvc.hdf5")
 
     predictions = Dense(units=num_classes, activation='sigmoid')(x)
