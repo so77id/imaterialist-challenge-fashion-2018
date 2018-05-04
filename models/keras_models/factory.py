@@ -12,27 +12,31 @@ from models.keras_models.xception import xception_model
 
 from models.keras_models.inception_resnet_v2 import inception_resnet_v2_model
 
-def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout_keep_prob=0, checkpoint="", freeze=False, use_mvc=False):
+def model_factory(model_name, img_rows, img_cols, channels, num_classes, dropout_keep_prob=0, checkpoint="", freeze=False, use_mvc=False, in_model=False, input_tensor=None):
 
     if model_name == 'inception_v4':
-        model = inception_v4_model(img_rows, img_cols, channels, num_classes, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = inception_v4_model(img_rows, img_cols, channels, num_classes, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'resnet_50':
         # model = resnet50_model(img_rows, img_cols, channels, num_classes, use_mvc=use_mvc)
-        model = resnet50_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = resnet50_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'densenet_121':
         # model = densenet121_model(img_rows, img_cols, channels, num_classes=num_classes, dropout_rate=dropout_keep_prob, use_mvc=use_mvc)
-        model = densenet121_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = densenet121_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'densenet_169':
-        model = densenet169_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = densenet169_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'densenet_201':
-        model = densenet201_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = densenet201_keras_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'xception':
-        model = xception_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = xception_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
     elif model_name == 'inception_resnet_v2':
-        model = inception_resnet_v2_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc)
+        model = inception_resnet_v2_model(img_rows, img_cols, channels, num_classes=num_classes, freeze=freeze, dropout_keep_prob=dropout_keep_prob, use_mvc=use_mvc, in_model=in_model, input_tensor=input_tensor)
 
     if checkpoint != '' and use_mvc == False:
         print("Loading checkpoint:", checkpoint)
-        model.load_weights(checkpoint, by_name=True)
+        if in_model:
+            model.load_weights(checkpoint, by_name=True)
+        else:
+            model_ = Model(inputs=input_tensor, outputs=model)
+            model_.load_weights(checkpoint, by_name=True)
 
     return model
