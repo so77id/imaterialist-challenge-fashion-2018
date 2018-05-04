@@ -124,6 +124,7 @@ MAIN_DATASET_FILE=mains.dataset_main
 KERAS_MAIN_FILE=mains.keras_main
 KERAS_PREDICT_FILE=mains.keras_predict
 KERAS_VOTING_FILE=mains.voting_emsemble_main
+KERAS_EMSEMBLE_FILE=mains.keras_emsemble_train
 
 # MODEL CHECKPOINTS URLS KERAS
 IMAGENET_CHECKPOINTS_FOLDER=./imagenet_checkpoints
@@ -197,6 +198,11 @@ voting-emsemble ve:
 	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
 	@$(PYTHON_COMMAND) $(KERAS_VOTING_FILE) -c $(CONFIG_FILE)
 
+emsemble-train et:
+	@echo "[Train Emsemble Keras] Predicting.."
+	@$(EXPORT_COMMAND) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)
+	@$(PYTHON_COMMAND) $(KERAS_EMSEMBLE_FILE) -c $(CONFIG_FILE)
+
 tensorboard tb:
 	@echo "[Tensorboard] Running Tensorboard"
 	@$(TENSORBOARD_COMMAND) --logdir=$(IMAGE_METADATA_PATH) --host 0.0.0.0
@@ -238,6 +244,10 @@ run-predict-keras rpk: docker-print
 
 run-voting_emsemble rvek: docker-print
 	@$(DOCKER_RUN_COMMAND) bash -c "make voting-emsemble CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
+	status=$$?
+
+run-emsemble-train ret: docker-print
+	@$(DOCKER_RUN_COMMAND) bash -c "make emsemble-train CONFIG_FILE=$(CONFIG_FILE) CUDA_VISIBLE_DEVICES=$(CUDA_VISIBLE_DEVICES)"; \
 	status=$$?
 
 #PRIVATE
