@@ -27,10 +27,10 @@
     "predict": {
       "parameters": {
         "threshold": 0.2,
-        "checkpoint": "",
-        "predict_path": "./metadata/resnet_50/predicts/imagenet",
-        "predict_file": "predict.csv",
-        "prob_predict_file": "predict_probs.csv"
+        "checkpoint": "./imagenet_checkpoints/weights-improvement-01-0.42.hdf5",
+        "predict_path": "./metadata/ensemble_resnet_inception_resnet/predicts/",
+        "predict_file": "predict-01.csv",
+        "prob_predict_file": "predict_probs-01.csv"
       }
     },
     "parameters": {
@@ -39,16 +39,13 @@
       "model_name": "Emsemble_trainable",
       "models": [
         "resnet_50",
-        "densenet_169",
         "inception_resnet_v2"
       ],
       "gpus": [
         "/cpu:0",
-        "/cpu:0",
         "/cpu:0"
       ],
       "checkpoints": [
-        "",
         "",
         ""
       ],

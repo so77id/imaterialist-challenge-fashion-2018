@@ -108,3 +108,4 @@ mvc_checkpoints
 mvc_checkpoints/*
 
 *.h5*
+*.hdf5

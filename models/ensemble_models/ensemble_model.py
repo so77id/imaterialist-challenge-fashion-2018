@@ -45,7 +45,7 @@ def model_factory(model_name, input_tensor, num_classes, dropout_keep_prob, chec
 
 
 
-def emsemble_model(models=[], gpus=[], checkpoints=[], img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2, use_mvc=False):
+def ensemble_model(models=[], gpus=[], checkpoints=[], img_rows=224, img_cols=224, channels=3, num_classes=1000, freeze=False, dropout_keep_prob=0.2, use_mvc=False):
     # assert len(models) == len(gpus) == len(checkpoints)
     #
     #

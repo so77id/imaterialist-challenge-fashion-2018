@@ -4,7 +4,7 @@ from utils.scores import fbeta
 from utils.metadata import get_metadata_paths
 from utils.optimizers import optimizer_factory
 
-from models.emsemble_models.emsemble_model import emsemble_model
+from models.ensemble_models.ensemble_model import ensemble_model
 from data_loader.dataset import Dataset
 
 from keras.callbacks import TensorBoard, ModelCheckpoint
@@ -41,7 +41,7 @@ def main():
     metadata_path, checkpoint_path, logs_path = get_metadata_paths(config, args)
 
     # Load model
-    model = emsemble_model(models=models,
+    model = ensemble_model(models=models,
                            gpus=gpus,
                            checkpoints=checkpoints,
                            img_rows=img_rows,
