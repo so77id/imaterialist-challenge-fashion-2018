@@ -89,7 +89,8 @@ def ensemble_model(models=[], gpus=[], checkpoints=[], img_rows=224, img_cols=22
         # gpu = /gpu:0 or /gpu:1
         with tf.device(gpu):
             print("Loading:", model_name)
-            network = model_factory(model_name, input_tensor, num_classes, dropout_keep_prob, checkpoint, use_imagenet=False)
+            with tf.name_scope(model_name):
+                network = model_factory(model_name, input_tensor, num_classes, dropout_keep_prob, checkpoint, use_imagenet=False)
 
             networks.append(network)
 
